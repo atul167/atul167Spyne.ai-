@@ -1,0 +1,36 @@
+<!-- views/discussion/profileDiscussions.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Discussions</title>
+</head>
+<body>
+  <h1>Profile Discussions</h1>
+
+  <ul>
+    <% discussions.forEach(discussion => { %>
+      <li>
+        <p><strong>Text:</strong> <%= discussion.text %></p>
+        <% if (discussion.image) { %>
+          <p><strong>Image:</strong> <img src="<%= discussion.image %>" alt="Discussion Image"></p>
+        <% } %>
+        <% if (discussion.hashtags.length > 0) { %>
+          <p><strong>Hashtags:</strong> <%= discussion.hashtags.join(', ') %></p>
+        <% } %>
+        <p><strong>Created On:</strong> <%= discussion.createdAt.toDateString() %></p>
+      </li>
+    <% }) %>
+  </ul>
+
+  <h2>Create New Discussion</h2>
+  <form action="/users/profile/<%= userId %>/discussions" method="POST">
+    <input type="text" name="text" placeholder="Discussion Text" required><br>
+    <input type="text" name="image" placeholder="Image URL"><br>
+    <input type="text" name="hashtags" placeholder="Hashtags (comma-separated)"><br>
+    <button type="submit">Post Discussion</button>
+  </form>
+</body>
+</html>
