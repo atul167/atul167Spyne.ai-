@@ -4,7 +4,6 @@ const UserController = require('../controllers/userController');
 // Route for user signup
 router.post('/signup', UserController.signup);
 
-
 // Route for user login
 router.post('/login', UserController.login);
 

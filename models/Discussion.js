@@ -6,7 +6,7 @@ const discussionSchema = new mongoose.Schema({
     required: true,
   },
   image: {
-    type: String, // Assuming you store image URLs
+    type: String, // Assuming we store image URLs
   },
   hashtags: {
     type: [String], // Array of strings for hashtags
