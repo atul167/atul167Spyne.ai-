@@ -1,34 +1,31 @@
+// controllers/DiscussionController.js
 const Discussion = require('../models/Discussion');
 
-// Get all discussions for a user profile
-const getDiscussionsByUserId = async (req, res) => {
-  try {
-    const userId = req.params.userId;
-    const discussions = await Discussion.find({ userId });
-    res.render('discussion/profileDiscussions', { discussions });
-  } catch (error) {
-    console.error('Error fetching discussions:', error);
-    res.status(500).send('Error fetching discussions');
-  }
-};
 
-// Create a new discussion
 const createDiscussion = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const { text, image, hashtags } = req.body;
+  console.log(req.body);
+  const userId = req.params.userId;
+  const { text, image, hashtags } = req.body;
 
-    const newDiscussion = new Discussion({ userId, text, image, hashtags });
+  try {
+    // Create a new discussion
+    const newDiscussion = new Discussion({
+      text,
+      image,
+      hashtags: hashtags.split(',').map(tag => tag.trim()),
+      userId,
+    });
+
     await newDiscussion.save();
 
-    res.redirect(`/profile/${userId}/discussions`);
+    // Redirect back to the profile page
+    res.redirect(`/profile/${userId}`);
   } catch (error) {
-    console.error('Error creating discussion:', error);
-    res.status(500).send('Error creating discussion');
+    console.error('Error posting discussion:', error);
+    res.status(500).send('Error posting discussion');
   }
 };
 
 module.exports = {
-  getDiscussionsByUserId,
   createDiscussion
 };

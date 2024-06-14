@@ -36,10 +36,8 @@ connectDB();
 
 // Routes
 const userRoutes = require("./routes/userRoutes");
-const discussionRoutes = require("./routes/discussionRoutes");
 app.use("/users", userRoutes);
 
-app.use("/discussions", discussionRoutes);
 // Homepage route
 app.get("/", (req, res) => {
   res.render("index"); // Render the 'index.ejs' view
@@ -62,6 +60,7 @@ app.get("/profile/:userId", async (req, res) => {
     res.status(500).send("Error fetching user");
   }
 });
+// Route to post a new discussion
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

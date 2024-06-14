@@ -1,3 +1,4 @@
+<!-- views/profile.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,5 +11,31 @@
   <p>User ID: <%= user._id %></p>
   <p>Email: <%= user.email %></p>
   <p>Mobile No: <%= user.mobileNo %></p>
+
+  <h2>Profile Discussions</h2>
+
+  <ul>
+    <% discussions.forEach(discussion => { %>
+      <li>
+        <p><strong>Text:</strong> <%= discussion.text %></p>
+        <% if (discussion.image) { %>
+          <p><strong>Image:</strong> <img src="<%= discussion.image %>" alt="Discussion Image"></p>
+        <% } %>
+        <% if (discussion.hashtags.length > 0) { %>
+          <p><strong>Hashtags:</strong> <%= discussion.hashtags.join(', ') %></p>
+        <% } %>
+      </li>
+    <% }) %>
+  </ul>
+  <!-- Iterate over discussions here if needed -->
+
+  <h3>Create New Discussion</h3>
+  <form action="/users/discussions" method="POST">
+    <input type="text" name="text" placeholder="Discussion Text" required><br>
+    <input type="text" name="image" placeholder="Image URL"><br>
+    <input type="text" name="hashtags" placeholder="Hashtags (comma-separated)"><br>
+    <input type="hidden" name="userId" value="<%= user._id %>">
+    <button type="submit">Post Discussion</button>
+  </form>
 </body>
 </html>
